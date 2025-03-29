@@ -29,7 +29,7 @@ def get_ship_info(ship_name, ship_info_path, fuel_data, pip_path):
             pip_df = pd.read_csv(pip_path)
 
             # Count the number of times the ship appears in the PIP file
-            ship_visits = pip_df[pip_df['Ship Name'].str.strip().str.lower() == ship_name.strip().lower()].shape[0]
+            ship_visits = 1 + pip_df[pip_df['Ship Name'].str.strip().str.lower() == ship_name.strip().lower()].shape[0]
 
             banned = False
 

@@ -18,10 +18,14 @@ def get_ship_info(ship_name, ship_info_path, fuel_data, pip_path):
             ship_type = ship_row.iloc[0]['Type']
             grt = ship_row.iloc[0]['Grt']
 
+            banned = False
+
             # Calculate fuel burned per hour
             if ship_type in fuel_data:
                 fuel_consumption = fuel_data[ship_type]
                 fuel_burned_per_hour = float(grt) * fuel_consumption / 1000  # Convert kilos to tons
+                if fuel_burned_per_hour > 100:
+                    banned = True
             else:
                 fuel_burned_per_hour = "Fuel consumption data not available for this ship type."
 
@@ -31,7 +35,7 @@ def get_ship_info(ship_name, ship_info_path, fuel_data, pip_path):
             # Count the number of times the ship appears in the PIP file
             ship_visits = 1 + pip_df[pip_df['Ship Name'].str.strip().str.lower() == ship_name.strip().lower()].shape[0]
 
-            banned = False
+
 
             # Calculate total fuel burned based on visits
             if isinstance(fuel_burned_per_hour, (int, float)):
